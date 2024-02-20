@@ -20,6 +20,16 @@ const App = () => {
 
   const search = (term) => {
     console.log(`${term} was searched`);
+    axios.post('/repos',{username: term})
+    .then(() =>{
+      //fetch the latest top25 repos after post without refreshing page
+      axios.get('/repos')
+      .then((response) => {
+        setRepos(response.data);
+      })
+      .catch((error) => console.error(error));
+    })
+    .catch((err) => console.error('Failed to add repos:', err));
   }
 
   return (
